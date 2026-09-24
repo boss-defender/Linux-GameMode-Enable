@@ -1,5 +1,8 @@
 # Linux_Games
 
+## Download the gaming-setup.sh file and run ./gaming-setup.sh in terminal . Boom! 
+## Or, 
+
 **For fedora linux:**
 
 ```text
