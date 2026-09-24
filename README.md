@@ -1,6 +1,13 @@
-# Linux_Games
+# 🚀 Linux_Games
 
-## Download the gaming-setup.sh file and run ./gaming-setup.sh in terminal . Boom! 
+**⚠️ Supported Only: Fedora, Ubuntu, Debian 13 (Trixie), Arch / Arch-based**
+
+---
+
+**⚡ Download the gaming-setup.sh file and run ./gaming-setup.sh in terminal . Boom!**
+
+---
+
 ## Or, 
 
 **For fedora linux:**
