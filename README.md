@@ -1,4 +1,5 @@
-# 🚀 Linux_Games
+# 🚀 Linux_GameMode_Enable
+## 🎮 Using script or a single line command, make linux ready for gaming. 
 
 **⚠️ Supported Only: Fedora, Ubuntu, Debian 13 (Trixie), Arch / Arch-based**
 
