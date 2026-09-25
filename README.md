@@ -4,6 +4,7 @@
 ---
 
 **⚠️ Supported Only: Fedora, Ubuntu, Debian 13 (Trixie), Linux Mint, Pop!_OS, and Zorin OS & Arch / Arch-based**
+
 **✋ If you use NVIDIA graphics, install the NVIDIA driver and its 32-bit libraries for your distribution.**
 
 ---
