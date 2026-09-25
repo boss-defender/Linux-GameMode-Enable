@@ -26,8 +26,8 @@ case "$OS_ID" in
   fedora)
     DISTRO=fedora
     ;;
-  ubuntu)
-    DISTRO=ubuntu
+  ubuntu|linuxmint|zorin|pop)
+    DISTRO=ubuntu_apt
     ;;
   debian)
     case "$OS_VERSION" in
@@ -42,7 +42,7 @@ case "$OS_ID" in
     if [[ " $OS_LIKE " == *" arch "* ]]; then
       DISTRO=arch
     else
-      fail "unsupported distribution: $OS_PRETTY_NAME. Supported: Fedora, Ubuntu, Debian 13, and Arch-based distributions."
+      fail "unsupported distribution: $OS_PRETTY_NAME. Supported: Fedora, Ubuntu, Linux Mint, Pop!_OS, Zorin OS, Debian 13, and Arch-based distributions."
     fi
     ;;
 esac
@@ -241,21 +241,26 @@ case "$DISTRO" in
       mangohud lib32-mangohud gamescope vulkan-tools mesa lib32-mesa \
       vulkan-icd-loader lib32-vulkan-icd-loader
     ;;
-  ubuntu)
+  ubuntu_apt)
     command -v apt-get >/dev/null 2>&1 || fail 'apt-get was not found.'
-    note 'Enabling i386 packages and Ubuntu Universe/Multiverse repositories...'
+    note "Enabling i386 packages and Universe/Multiverse repositories for $OS_PRETTY_NAME..."
     root_run dpkg --add-architecture i386
     root_run apt-get update
-    root_run apt-get install -y software-properties-common
-    root_run add-apt-repository -y universe
-    root_run add-apt-repository -y multiverse
-    root_run apt-get update
+    if [[ "$OS_ID" == linuxmint ]]; then
+      note 'Using Linux Mint managed sources; its Ubuntu package sources normally already include Universe and Multiverse.'
+    else
+      root_run apt-get install -y software-properties-common
+      root_run add-apt-repository -y universe
+      root_run add-apt-repository -y multiverse
+      root_run apt-get update
+    fi
+    has_apt_candidate steam-installer || fail 'steam-installer is unavailable. Check that the Ubuntu-based APT sources include Multiverse and support amd64/i386.'
     root_run apt-get full-upgrade -y
-    note 'Installing Ubuntu gaming packages...'
+    note "Installing gaming packages for $OS_PRETTY_NAME..."
     root_run apt-get install -y \
       steam-installer lutris wine winetricks gamemode mangohud vulkan-tools \
       mesa-vulkan-drivers mesa-vulkan-drivers:i386 libvulkan1 libvulkan1:i386 \
-      libgl1-mesa-dri:i386
+      libgl1-mesa-dri libgl1-mesa-dri:i386
     install_optional_gamescope_apt
     ;;
   debian13)
@@ -270,7 +275,7 @@ case "$DISTRO" in
     root_run apt-get install -y \
       steam-installer lutris wine winetricks gamemode mangohud vulkan-tools \
       mesa-vulkan-drivers mesa-vulkan-drivers:i386 libvulkan1 libvulkan1:i386 \
-      libgl1-mesa-dri:i386
+      libgl1-mesa-dri libgl1-mesa-dri:i386
     install_optional_gamescope_apt
     ;;
 esac
